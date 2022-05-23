@@ -15,8 +15,7 @@ yapılır ve kullanımı alt düzey G/Ç yöntemine göre daha kolaydır.
   * Dosya açma fonksiyonu, `fopen()`, kendisini çağırana bir adres gönderir: dosya açılmazsa NULL; açılırsa dosya bilgilerinin saklandığı topluluğun başlangıç adresi.
 
 * ##### `fclose(dosyaadı)`,
-* ##### `putc(yazılacak karakteri gösteren değişken, dosya işaretçisi)` ve `fputc(yazılacak karakteri gösteren değişken, dosya işaretçisi)`
-kullanılarak aynı anda tek karakter yazılır.
+* ##### `putc(yazılacak karakteri gösteren değişken, dosya işaretçisi)` ve `fputc(yazılacak karakteri gösteren değişken, dosya işaretçisi)`kullanılarak aynı anda tek karakter yazılır.
 ---
 
 * `fopen()` dosya modları; Kİ -> kayıt işaretçisi
