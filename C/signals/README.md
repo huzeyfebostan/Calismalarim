@@ -32,3 +32,19 @@ sighandler_t signal (int  sinyalnum, sighandler_t eylem)
 - İlk argüman olan **sinyalnum**, denetlenecek davranışın karşılığı olan sinyaldir ve bir sinyal numarası olarak belirtilmelidir.
 - İkinci argüman olan **eylem** ise, **sinyalnum** sinyali için kullanılacak eylemi belirtmek için kullanılır.
 - **signal** fonksiyonu için daha ayrıntılı [kaynak](https://www.tutorialspoint.com/c_standard_library/c_function_signal.htm)
+- `sighandler_t SIG_ERR`bu makronun değeri, **signal** işlevinin dönen bir hata değeri olarak kullanılır.
+
+###Gelişmiş Sinyal İşleme
+- **sigaction** işlevi **signal** işlevi ile aynı temel etkiye sahiptir: bir sinyalin süreç tarafından nasıl işleneceği belirtilir. Farklı olarak, sinyalin üretilmesi ve eylemcinin çağrılması ile ilgili çeşitli denetim seçenekleri belirtilebilir.
+```C
+int sigaction (int sinyalnum, const struct sigaction *restrict eylem, struct sigaction *restrict eski-eylem)
+```
+- **eylem** argümanı ile **sinyalnum** sinyali için yeni bir eylem belirtilirken, **eski-eylem** argümanı, bu sembolle ilişkili evvelki eylem hakkında bilgi döndürmek için kullanılır.
+- Hem **eylem** hem de **eski-eylem** birer boş gösterici olabilir. **eski-eylem** bir boş gösterici ise, **sinyalnum** sinyali ile ilişkili eylem değişmez:bu, bir sinyalin işlenme şeklini değiştirilmeksizin o sinyalin işlenmesi ile ilgili bilgi edinmenizi mümkün kılar.
+- **sigaction** başarılı olduğunda **0** ile aksi taktirde **-1** ile döner.
+
+###signal ve sigaction arasındaki etkileşim
+- **signal** ve **sigaction** işlevlerini aynı yazılım içinde kullanmak mümkündür. Ancak tuhav bir yolla bu iki işlev birbirinden etkilenir, bu nedenle bu ikisini aynı yazılım içinde kullanıyorsanız dikkatli olmanız gerekir.
+- **sigaction** işlevi **signal** işlevinden daha fazla bilgi içerir.
+- Bir eylemi kaydedip daha sonra etkinleştirmek için **signal** işlevini kullanırsanız, tekrar kurulan eylemci **sigaction** tarafından yeniden kurulan eylemci kadar düzgün oluşmayacaktır.
+- Sonuç olarak, sorunlardan kaçınmak için, yazılımınızda her yerde **sigaction** kullanmışsanız, bir eylemi kaydetmek ve yeniden oluşturmak için yine **sigaction** işlevini kullanın. Hatta, **sigaction** daha genel olduğundan, bir eylem hangi işlev ile kurulmuş olursa olsun, bir eylemi orjinal haliyle saklamak ve yeniden oluşturmak için daima.

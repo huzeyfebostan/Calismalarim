@@ -3,22 +3,21 @@
 #include <stdlib.h>
 #include <signal.h>
 
-void sighandler(int);
+//CTRL+C tuşlarına basılana kadar programın çalışmasını sağlar.
+void sigint_handler(int sig)
+{
+    printf("CTRL+C tuşuna basıldı.Yakalanan sinyal: %d\n",sig);
+    exit(0);
+}
 
 int main () 
 {
-  signal(SIGINT, sighandler);
+  signal(SIGINT, sigint_handler);
   
   while(1) 
   {
-    printf("Going to sleep for a second...\n");
+    printf("1 saniye geçti...\n");
     sleep(1); 
   }
   return(0);
-}
-
-void sighandler(int signum) 
-{
-  printf("Caught signal %d, coming out...\n", signum);
-  exit(1);
 }
