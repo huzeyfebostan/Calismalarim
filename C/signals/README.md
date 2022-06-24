@@ -48,3 +48,20 @@ int sigaction (int sinyalnum, const struct sigaction *restrict eylem, struct sig
 - **sigaction** işlevi **signal** işlevinden daha fazla bilgi içerir.
 - Bir eylemi kaydedip daha sonra etkinleştirmek için **signal** işlevini kullanırsanız, tekrar kurulan eylemci **sigaction** tarafından yeniden kurulan eylemci kadar düzgün oluşmayacaktır.
 - Sonuç olarak, sorunlardan kaçınmak için, yazılımınızda her yerde **sigaction** kullanmışsanız, bir eylemi kaydetmek ve yeniden oluşturmak için yine **sigaction** işlevini kullanın. Hatta, **sigaction** daha genel olduğundan, bir eylem hangi işlev ile kurulmuş olursa olsun, bir eylemi orjinal haliyle saklamak ve yeniden oluşturmak için daima.
+
+###Başka Bir Sürece Sinyal Gönderme
+- **kill** işlevi bir sinyalin başka bir sürece gönderilmesi için kullanılır. ismine rağmen, bir sürecin sonlandırılmasına sebep olmaktan farklı birşeyler yapmak için de kullanılabilir.
+```C
+int kill (pid_t pid, int sinyalnum)
+```
+- **kill** işlevi **pid** ile belirtilen süreç ya da süreç grubuna **sinyalnum** sinyalini gönderir, **pid** süreç kümlüğünü doğrulamak için sıfır değerini de kullanabilirsiniz.
+- **pid > 0** 
+  * Belirteci **pid** olan süreç.
+- **pid == 0** 
+  * Gönderen ile aynı gruptaki süreçlerin tümü.
+- **pid < -1**
+  * Belirteci **-pid** olan ssüreç grubu.
+- **pid == -1**
+  * Eğer süreç ayrıcalıklı ise, sinyal, bazı özel sistem süreçleri dışında kalan tüm süreçlere gönderilir. Aksi taktirde, sinyal, aynı etkin kullanıcı kimlikli tüm süreçlere gönderilir.
+- Bir süreç `kill (getpid(), sinyal)`gibi bir çağrı ile kendisine bit sinyal gönderebilir ve sinyal engellenmez, sonrasında **kill** dönmeden önce sürece en az bir sinyal (**sinyalnum** yerine beklemede olan engellenmeyen sinyaller gidebilir) gönderir.
+- Sinyal gönderme başarılı olduğunda **kill** 0 ile döner. Aksi taktirde sinyal gönderilmemiş demektir ve **-1** ile döner. Eğer **pid** bir sinyalin birden fazla sürece gönderilmesini belirtiyorsa, en azından bir sürece sinyal gönderilebilmişse **kill** sıfır ile dönecektir. Sinyali alan ve alamayan süreçlerin hangileri olduğunu saptayacak bir yöntem yoktur.
