@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <signal.h>
 #include <time.h>
+#include <unistd.h>
 
 char sym = 'X';
 FILE *fp = NULL;
@@ -19,11 +20,27 @@ void sh2(int st)
 
 int main()
 {
+  char kr;
+  FILE *fp;
+  int pid = getpid();
+  printf("%d\n",pid);
   signal(SIGUSR2,sh2);
   signal(SIGUSR1,sh1);
   
-  setbuf(stdout,NULL);
   while(1)
-    printf("     %c",sym);
+  {
+    fp = fopen("foo","r");
+    if (fp != NULL)
+    {
+      while (!feof(fp))
+      {
+        kr = getc(fp);
+        putchar(kr);
+      }
+    }
+    fclose(fp);
+  }
+  
+  setbuf(stdout,NULL);
   return 0;
 }
