@@ -65,3 +65,14 @@ int kill (pid_t pid, int sinyalnum)
   * Eğer süreç ayrıcalıklı ise, sinyal, bazı özel sistem süreçleri dışında kalan tüm süreçlere gönderilir. Aksi taktirde, sinyal, aynı etkin kullanıcı kimlikli tüm süreçlere gönderilir.
 - Bir süreç `kill (getpid(), sinyal)`gibi bir çağrı ile kendisine bit sinyal gönderebilir ve sinyal engellenmez, sonrasında **kill** dönmeden önce sürece en az bir sinyal (**sinyalnum** yerine beklemede olan engellenmeyen sinyaller gidebilir) gönderir.
 - Sinyal gönderme başarılı olduğunda **kill** 0 ile döner. Aksi taktirde sinyal gönderilmemiş demektir ve **-1** ile döner. Eğer **pid** bir sinyalin birden fazla sürece gönderilmesini belirtiyorsa, en azından bir sürece sinyal gönderilebilmişse **kill** sıfır ile dönecektir. Sinyali alan ve alamayan süreçlerin hangileri olduğunu saptayacak bir yöntem yoktur.
+
+###Sinyal Kümeleri
+- Sinyal engelleme işlevlerinin tümü **sinyal kümesi** adı verilen bir veri yapısını kullanırlar. Bu işlem iki kademede yapılır: sinyal kümesi oluşturulur ve bir argüman olarak bir kütüphane işlevine aktarılır.
+```C
+int sigemptyset (sigset_t *küme)
+```
+- Bu işlev **küme** sinyal kümesini tanımlı hiçbir sinyali içermediği biçimde ilklendirir. Daima **0** ile döner.
+```C
+int sigaddset (sigset_t *küme, int sinyalnum)
+````
+- Bu işlev **sinyalnum** sinyalini **küme** sinyali kümesine ekler. **sigaddset**'ler sadece **küme**'yi değiştirir, sinyal engelleme/engellememe yapmaz. Başarılı olursa **0**, aksi taktirde **-1** ile döner.
