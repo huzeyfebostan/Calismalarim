@@ -20,7 +20,7 @@ class MyWid extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 70.0,
                   backgroundColor: Colors.lime,
                   backgroundImage: AssetImage('assets/images/kahve.jpeg'),
@@ -35,59 +35,53 @@ class MyWid extends StatelessWidget {
                 Text(
                   'BİR FİNCAN UZAĞINIZDA',
                   style: GoogleFonts.dancingScript(
-                      fontSize: 26, color: Colors.white),
+                      fontSize: 20, color: Colors.white),
                 ),
                 Container(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 45.0,
+                  width: 230,
+                  child: Divider(
+                    height: 10,
+                    color: Colors.brown[900],
                   ),
-                  padding: const EdgeInsets.all(10.0),
-                  color: Colors.brown[900],
-                  child: Row(
-                    children: const <Widget>[
-                      Icon(
+                ),
+                Card(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 45.0,
+                    ),
+                    color: Colors.brown[900],
+                    child: const ListTile(
+                      leading: Icon(
                         Icons.email,
                         color: Colors.white,
                       ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Text(
+                      title: Text(
                         'siparis@fkahvecisi.com',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 20,
+                          fontSize: 17.0,
                         ),
                       ),
-                    ],
-                  ),
-                ),
+                    )),
                 const SizedBox(
                   height: 10,
                 ),
-                Container(
+                Card(
                   margin: const EdgeInsets.symmetric(
                     horizontal: 45.0,
                   ),
-                  padding: const EdgeInsets.all(10.0),
                   color: Colors.brown[900],
-                  child: Row(
-                    children: const <Widget>[
-                      Icon(
-                        Icons.phone,
+                  child: const ListTile(
+                    leading: Icon(
+                      Icons.phone,
+                      color: Colors.white,
+                    ),
+                    title: Text(
+                      '+90 555 555 55 55',
+                      style: TextStyle(
                         color: Colors.white,
+                        fontSize: 17.0,
                       ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Text(
-                        '+90 555 555 55 55',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                      )
-                    ],
+                    ),
                   ),
                 ),
               ],
