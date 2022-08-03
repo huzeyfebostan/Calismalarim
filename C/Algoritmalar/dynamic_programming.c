@@ -38,7 +38,7 @@ void str_comparison(char *str1, char *str2, int len1, int len2)
 
 int main(int argc, char **argv) 
 {
-  int i, str1_len, str2_len;
+  int str1_len, str2_len;
   char  *str1, *str2;
 
   str1_len = strlen(argv[1]);
